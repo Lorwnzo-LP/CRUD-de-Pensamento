@@ -7,6 +7,8 @@ const ui = {
         document.getElementById("pensamento-id").value = pensamento.id;
         document.getElementById("pensamento-conteudo").value = pensamento.conteudo;
         document.getElementById("pensamento-autoria").value = pensamento.autoria;
+        document.getElementById("pensamento-data").value = pensamento.data.toISOString().split("T")[0]
+        document.getElementById("form-container").scrollIntoView();
     },
 
     async renderizarPensamentos (parametroRecebido = null){
@@ -50,6 +52,21 @@ const ui = {
         const divAutoria = document.createElement("div");
         divAutoria.classList.add("pensamento-autoria");
         divAutoria.textContent = pensamento.autoria;
+
+        const divData = document.createElement("div");
+
+        var options = {
+            weekday:'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            timeZone: 'UTC'
+        }
+
+        const dataFormatada = pensamento.data.toLocaleDateString("pt-BR", options)
+        const dataComRegex = dataFormatada.replace(/^(\w)/, (match) => match.toUpperCase())
+        divData.classList.add("pensamento-data");
+        divData.textContent = dataComRegexa;
 
         const botaoEditar = document.createElement("button");
         botaoEditar.classList.add("botao-editar");
@@ -99,6 +116,7 @@ const ui = {
         li.appendChild(iconeAspas);
         li.appendChild(divConteudo);
         li.appendChild(divAutoria);
+        li.appendChild(divData);
         li.appendChild(icones);
         listaPensamentos.appendChild(li);
     },
